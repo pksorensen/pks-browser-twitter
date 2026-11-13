@@ -1,0 +1,51 @@
+# pks-browser-twitter
+
+Browser-opskrifter til X, kørt **lokalt** af [Agentics browser-tray](https://agentics.dk/products/pks-agent-browser)
+på en profil du selv har logget ind i. Intet login og ingen cookie forlader maskinen.
+
+## Opskrifter
+
+| Fil | Hvad den gør | Profil | Status |
+| --- | --- | --- | --- |
+| [`recipes/x-bogmaerker.json`](recipes/x-bogmaerker.json) | Høster dine bogmærker — kun nyt siden sidst | `x` | kører |
+
+## Installér en opskrift
+
+1. Hent filen: **[x-bogmaerker.json](https://raw.githubusercontent.com/pksorensen/pks-browser-twitter/main/recipes/x-bogmaerker.json)** (højreklik → Gem som)
+2. Læg den i `%USERPROFILE%\.agentics\browser-tray\recipes\`
+3. Højreklik på tray-ikonet. Menuen bygges forfra hver gang den åbnes, så opskriften er der med det samme — ingen genstart.
+
+**Behold filnavnet.** Trayen nøgler vandmærket (`x-bogmaerker.seen.json`) på filnavnet, så en omdøbning starter høsten forfra.
+
+Første gang beder trayen om din godkendelse af trinnene. Det er med vilje: en opskrift kan nå en browser hvor du er logget ind, og godkendelsen hænger på trinnenes hash — ændrer filen sig, bliver du spurgt igen.
+
+## Krav
+
+```powershell
+irm https://agentics.dk/install/pks-agent-browser-tray.ps1 | iex
+```
+
+Dertil en profil der heder `x` i trayens `settings.json`, og at du har logget ind i den én gang via menuen (*Log ind i profil 'x'…*).
+
+## Kør fra kommandolinjen
+
+Menuen er den understøttede vej — den viser dialoger og fejl. Kommandolinjen findes også:
+
+```powershell
+$tray = "$env:LOCALAPPDATA\Agentics\bin\pks-agent-browser-tray.exe"
+& $tray recipes                                          # hvad ligger der, og kan det køres
+& $tray run --name x-bogmaerker *> run.log; cat run.log  # kør én opskrift
+```
+
+Omdirigeringen er ikke pynt: trayen er bygget som `WinExe` og har ingen konsol, så uden `*> fil` forsvinder både resultatet og fejlen.
+
+## Hvad du skal vide om denne opskrift
+
+- **X har omdøbt Bogmærker til "History".** `x.com/i/bookmarks` omdirigerer nu til `x.com/i/history`, hvor Bogmærker er landingsfanen. Derfor venter opskriften på et *bogmærkekort* (`assert`) frem for på adressen — en adresseventetid brækkede 7/11-2026.
+- **Selektoren er stadig under tilpasning.** Den nuværende form skærer `/analytics`- og `/photo/`-links væk, men trækker fortsat citerede opslag med. Kandidaten er `article a[href*='/status/']:has(time)`, som giver præcis én nøgle pr. kort; den mangler en måling på en rigtig side.
+- **Fremdriften er musehjul, ikke tastetryk.** `"key": "j"` er fjernet — programmatisk scroll standsede 498 px fra bunden.
+- **X serverer ingenting til en browser der ikke er logget ind.** Selektorer kan derfor ikke måles fra en tom profil.
+
+## Rettelser
+
+Push til `main`. Der er ingen udgivelse at vente på: hent filen igen, eller brug Kør-knappen på agentics.dk når opskriftssiden er klar.

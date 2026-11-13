@@ -1,0 +1,28 @@
+{
+  "name": "x-bogmærker",
+  "description": "Høster dine X-bogmærker. Kun læse-verber, så den kan køre uovervåget. Tager kun nyt siden sidst.",
+  "profile": "x",
+  "params": {
+    "sidstSete": {
+      "description": "Adresser høsten allerede har set. Fyldes af trayen fra x-bogmaerker.seen.json — slet filen for at tvinge en fuld høst."
+    }
+  },
+  "result": ["bogmaerker"],
+  "steps": [
+    { "id": "aabn", "do": "goto", "url": "https://x.com/i/bookmarks" },
+    { "id": "vent", "do": "assert", "selector": "article a[href*='/status/']" },
+    {
+      "id": "host",
+      "do": "scrollCollect",
+      "selector": "article a[href*='/status/']:not([href*='/analytics']):not([href*='/photo/'])",
+      "as": "bogmaerker",
+      "knownIn": "sidstSete",
+      "dedupeBy": "href",
+      "stableRounds": 5,
+      "roundDelayMs": 400,
+      "maxRounds": 600,
+      "resumeOnce": true,
+      "resumeWaitMs": 3000
+    }
+  ]
+}
