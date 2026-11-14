@@ -16,14 +16,27 @@ henter, så et push imellem ikke kan bytte opskriften ud under dig.
 
 ## Installér en opskrift
 
-1. Hent filen fra **[opskriftssiden](https://agentics.dk/browser/recipes/pksorensen/pks-browser-twitter)** — tryk *Hent opskriften*.
-   (Eller direkte fra [GitHub](https://raw.githubusercontent.com/pksorensen/pks-browser-twitter/main/recipes/x-bogmaerker.json), højreklik → Gem som.)
+1. Gå til **[opskriftssiden](https://agentics.dk/browser/recipes/pksorensen/pks-browser-twitter)** og tryk *Installér i trayen*. Trayen henter opskriften
+   og viser en kvittering: hvilken commit den kom fra, hvilke værter den rører, om den
+   handler eller kun læser, og hvad aftrykket er. Siger du ja, ligger den i mappen og
+   står i menuen med det samme. **Kør nu** er det samme, plus at den kører bagefter.
+2. Sker der ingenting, kender maskinen ikke `agentics-browser://` endnu — start trayen
+   én gang, og prøv igen. Den melder sig som den der håndterer adressen ved hver start.
+
+I hånden, hvis du vil se filen først:
+
+1. Tryk *Hent opskriften* på [opskriftssiden](https://agentics.dk/browser/recipes/pksorensen/pks-browser-twitter) — eller direkte fra
+   [GitHub](https://raw.githubusercontent.com/pksorensen/pks-browser-twitter/main/recipes/x-bogmaerker.json), højreklik → Gem som.
 2. Læg den i `%USERPROFILE%\.agentics\browser-tray\recipes\`
 3. Højreklik på tray-ikonet. Menuen bygges forfra hver gang den åbnes, så opskriften er der med det samme — ingen genstart.
 
 **Behold filnavnet.** Trayen nøgler vandmærket (`x-bogmaerker.seen.json`) på filnavnet, så en omdøbning starter høsten forfra.
 
-Første gang beder trayen om din godkendelse af trinnene. Det er med vilje: en opskrift kan nå en browser hvor du er logget ind, og godkendelsen hænger på trinnenes hash — ændrer filen sig, bliver du spurgt igen.
+Trayen beder altid om din godkendelse af trinnene. Det er med vilje: en opskrift kan nå en
+browser hvor du er logget ind. For en fil du selv har lagt i mappen hænger godkendelsen på
+trinnenes aftryk — ændrer filen sig, bliver du spurgt igen. Kommer opskriften fra en knap på
+en webside, bliver du spurgt **hver gang**, og det ja bliver aldrig en stående tilladelse til
+at køre den uovervåget. Et klik på en webside er ikke det samme som et klik i din egen menu.
 
 ## Krav
 
@@ -54,4 +67,4 @@ Omdirigeringen er ikke pynt: trayen er bygget som `WinExe` og har ingen konsol, 
 
 ## Rettelser
 
-Push til `main`. Der er ingen udgivelse at vente på: hent filen igen, eller brug Kør-knappen på agentics.dk når opskriftssiden er klar.
+Push til `main`. Der er ingen udgivelse at vente på: hent filen igen, eller tryk **Kør nu** på opskriftssiden — den læser `main` og er låst til den commit du ser.
