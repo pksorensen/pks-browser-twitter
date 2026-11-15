@@ -2,6 +2,7 @@
   "name": "x-bogmærker",
   "description": "Høster dine X-bogmærker. Kun læse-verber, så den kan køre uovervåget. Tager kun nyt siden sidst.",
   "profile": "x",
+  "hosts": ["x.com", "twitter.com"],
   "params": {
     "sidstSete": {
       "description": "Adresser høsten allerede har set. Fyldes af trayen fra x-bogmaerker.seen.json — slet filen for at tvinge en fuld høst."
